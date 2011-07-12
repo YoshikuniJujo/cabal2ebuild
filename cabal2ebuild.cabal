@@ -1,0 +1,19 @@
+Name:                cabal2ebuild
+Version:             0.0.2
+Synopsis:            yet
+Description:         yet 
+Homepage:            yet
+License:             BSD3
+License-file:        LICENSE
+Author:              Yoshikuni Jujo
+Maintainer:          PAF01143@nifty.ne.jp
+-- Copyright:           
+Category:            Cryptography
+Build-type:          Simple
+-- Extra-source-files:  
+Cabal-version:       >=1.2
+
+executable cabal2ebuild
+  main-is:       cabal2ebuild.hs
+  other-modules: Depend
+  build-depends: base >= 4, directory, Cabal

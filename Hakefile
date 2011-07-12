@@ -1,0 +1,25 @@
+import Development.Hake
+import Development.Hake.FunSet
+
+main = do
+  address <- fmap ( filter (/='\n') ) $ readFile "address"
+  user    <- fmap ( filter (/='\n') ) $ readFile "user"
+  hake $ [
+
+   task "test" [ "ghc -e test cabal2ebuild" ]
+   ,
+   task "clean" [ "rm -f cabal2ebuild-0.0.1.ebuild" ]
+   ,
+   task "clean_cache" [
+     "rm -f ~/local/portage/dev-haskell/cabal2ebuild/Manifest" ,
+     "rm -f /usr/portage/distfiles/cabal2ebuild-0.0.1.tar.gz"
+    ]
+   ,
+   file [ "manifest" ] [ "clean_cache" ] $ \_ _ -> [
+     "cabal sdist" ,
+     "yjftp put dist/cabal2ebuild-0.0.1.tar.gz " ++ address ++
+     "/homepage/second/portage/distfiles " ++ user ,
+     "ebuild ~/local/portage/dev-haskell/cabal2ebuild/cabal2ebuild-0.0.1.ebuild manifest"
+    ]
+
+   ]
