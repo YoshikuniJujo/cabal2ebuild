@@ -17,3 +17,4 @@ executable cabal2ebuild
   main-is:       cabal2ebuild.hs
   other-modules: Depend
   build-depends: base >= 4, directory, Cabal
+  Ghc-options:		-Wall
