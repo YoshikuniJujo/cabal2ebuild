@@ -29,8 +29,9 @@ pkgCabEbList = [
   ( "X11-xft"   , Just "dev-haskell/x11-xft" ) ,
   ( "process"   , Nothing                    ) ,
   ( "HUnit"     , Just "dev-haskell/hunit"   ) ,
-  ( "old-time"  , Nothing                    )
-
+  ( "old-time"  , Nothing                    ) ,
+  ( "HaXml"	, Just "dev-haskell/haxml"   ) ,
+  ( "Imlib"	, Just "dev-haskell/imlib"   )
  ]
 
 ebDepend :: Dependency -> Maybe String
