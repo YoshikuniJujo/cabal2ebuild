@@ -31,7 +31,10 @@ pkgCabEbList = [
   ( "HUnit"     , Just "dev-haskell/hunit"   ) ,
   ( "old-time"  , Nothing                    ) ,
   ( "HaXml"	, Just "dev-haskell/haxml"   ) ,
-  ( "Imlib"	, Just "dev-haskell/imlib"   )
+  ( "Imlib"	, Just "dev-haskell/imlib"   ) ,
+  ( "ListLike"	, Just "dev-haskell/listlike") ,
+  ( "pretty"	, Nothing                    ) ,
+  ( "template-haskell"	, Nothing            )
  ]
 
 ebDepend :: Dependency -> Maybe String
@@ -64,6 +67,8 @@ getPkgVersion ( ThisVersion v ) = ( "=", showVersion v )
 getPkgVersion ( LaterVersion v ) = ( ">", showVersion v )
 getPkgVersion ( EarlierVersion v ) = ( "<", showVersion v )
 getPkgVersion ( IntersectVersionRanges v1 v2 ) = getPkgVersion v1
+getPkgVersion ( WildcardVersion v@Version{versionBranch = vb} ) =
+	( "<", "-" ++ showVersion v{versionBranch = init vb ++ [last vb + 1]} )
 
 getDepPkgVersion :: Dependency -> VersionRange
 getDepPkgVersion ( Dependency _ vr ) = vr
@@ -73,7 +78,8 @@ getDepPkgVersion ( Dependency _ vr ) = vr
 ebDepends :: GenericPackageDescription -> [ String ]
 ebDepends gpd =
   let exdep = catMaybes $ map ebDepend $ concatMap condTreeConstraints $ map snd $ condExecutables gpd
-      libdep = concat $ maybeToList $ fmap ( catMaybes . map ebDepend . condTreeConstraints ) $ condLibrary gpd
+      libdep = concat $ maybeToList $
+	fmap ( catMaybes . map ebDepend . condTreeConstraints ) $ condLibrary gpd
 --  print $ map snd $ condExecutables gpd
 --  print $ fmap ( map ebDepend . condTreeConstraints ) $ condLibrary gpd
    in exdep ++ libdep
