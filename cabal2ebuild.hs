@@ -87,9 +87,9 @@ gpdToEbuild gpd = Ebuild {
   
 ebuildToFile :: Ebuild -> String
 ebuildToFile eb =
+  "EAPI=" ++ show ( ebAPI eb ) ++ "\n\n" ++
   "CABAL_FEATURES=\"" ++ unwords ( ebCabalFt eb ) ++ "\"\n" ++
   "inherit " ++ ebInherit eb ++ "\n\n" ++
-  "EAPI=" ++ show ( ebAPI eb ) ++ "\n\n" ++
   "DESCRIPTION=" ++ show ( ebDsc eb ) ++ "\n" ++
   "HOMEPAGE=" ++ show ( ebHmpg eb ) ++ "\n" ++
   "SRC_URI=" ++ srcURI eb ++ "\n\n" ++
