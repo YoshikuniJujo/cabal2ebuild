@@ -34,7 +34,8 @@ pkgCabEbList = [
   ( "Imlib"	, Just "dev-haskell/imlib"   ) ,
   ( "ListLike"	, Just "dev-haskell/listlike") ,
   ( "pretty"	, Nothing                    ) ,
-  ( "template-haskell"	, Nothing            )
+  ( "template-haskell"	, Nothing            ) ,
+  ( "GLUT"      , Just "dev-haskell/glut"    )
  ]
 
 ebDepend :: Dependency -> Maybe String
