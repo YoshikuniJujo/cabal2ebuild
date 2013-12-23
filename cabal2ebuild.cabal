@@ -1,5 +1,5 @@
 Name:                cabal2ebuild
-Version:             0.0.15.3
+Version:             0.0.15.4
 Stability:           Experimental
 Synopsis:            make gentoo's .ebuild file from .cabal file
 Description:
@@ -21,12 +21,12 @@ Cabal-version:       >=1.6
 
 source-repository head
   type:		git
-  location:	git://github.com/YoshikuniJujo/cabal2ebuild.git
+  location:	https://github.com/YoshikuniJujo/cabal2ebuild.git
 
 source-repository this
   type:		git
-  location:	git://github.com/YoshikuniJujo/cabal2ebuild.git
-  tag:		0.0.15.3
+  location:	https://github.com/YoshikuniJujo/cabal2ebuild.git
+  tag:		0.0.15.4
 
 executable cabal2ebuild
   main-is:       cabal2ebuild.hs
