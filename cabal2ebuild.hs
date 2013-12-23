@@ -10,6 +10,11 @@ import System.Directory
 import Data.List
 import Depend
 
+import System.IO.Unsafe
+import System.Directory
+import System.FilePath
+import Control.Applicative
+
 test :: IO ()
 test = do
   gpd <- readPackageDescription normal "cabal2ebuild.cabal"
@@ -113,8 +118,20 @@ makeCabalFeatures lb ex
         xs = if ex then "bin " else ""
      in "CABAL_FEATURES=" ++ show ( xs ++ ls ++ "haddock profile hscolour" )
 
+myGentooRepo :: Maybe String
+myGentooRepo = unsafePerformIO $ do
+	hd <- getHomeDirectory
+	let confFile = hd </> ".cabal2ebuild" </> "gentoo_repo.txt"
+	fe <- doesFileExist confFile
+	if not fe then return Nothing else
+		Just . head . lines <$> readFile confFile
+
 makeSrcURI :: String -> String
-makeSrcURI nam = show ( "http://homepage3.nifty.com/salamander/second/portage/distfiles/" ++ nam ++ ".tar.gz" )
+-- makeSrcURI nam = show ( "http://homepage3.nifty.com/salamander/second/portage/distfiles/" ++ nam ++ ".tar.gz" )
+makeSrcURI nam = case myGentooRepo of
+	Just r -> show $ r ++ nam ++ ".tar.gz"
+	_ -> show $ "http://hackage.haskell.org/package/" ++ nam ++ "/" ++
+		nam ++ ".tar.gz"
 
 makeLicense :: License -> String
 makeLicense l = "LICENSE=" ++ show ( show l )

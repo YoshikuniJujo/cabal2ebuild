@@ -1,5 +1,5 @@
 Name:                cabal2ebuild
-Version:             0.0.14
+Version:             0.0.15
 Synopsis:            yet
 Description:         yet 
 Homepage:            yet
@@ -11,10 +11,14 @@ Maintainer:          PAF01143@nifty.ne.jp
 Category:            Cryptography
 Build-type:          Simple
 -- Extra-source-files:  
-Cabal-version:       >=1.2
+Cabal-version:       >=1.6
+
+source-repository head
+  type:		git
+  location:	git://github.com/YoshikuniJujo/cabal2ebuild.git
 
 executable cabal2ebuild
   main-is:       cabal2ebuild.hs
   other-modules: Depend
-  build-depends: base >= 4, directory, Cabal
+  build-depends: base >= 4, directory, Cabal, filepath
   Ghc-options:		-Wall

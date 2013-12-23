@@ -1,3 +1,4 @@
 /dist/
 /cabal2ebuild-*.ebuild
+/cabal2ebuild-*.ebuild.bak
 .yavie.*
