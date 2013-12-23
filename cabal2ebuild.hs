@@ -124,7 +124,12 @@ myGentooRepo = unsafePerformIO $ do
 	let confFile = hd </> ".cabal2ebuild" </> "gentoo_repo.txt"
 	fe <- doesFileExist confFile
 	if not fe then return Nothing else
-		Just . head . lines <$> readFile confFile
+		fromConfigFile <$> readFile confFile
+
+fromConfigFile :: String -> Maybe String
+fromConfigFile cnt = case lines cnt of
+	["local", repo] -> Just repo
+	_ -> Nothing
 
 makeSrcURI :: String -> String
 -- makeSrcURI nam = show ( "http://homepage3.nifty.com/salamander/second/portage/distfiles/" ++ nam ++ ".tar.gz" )
