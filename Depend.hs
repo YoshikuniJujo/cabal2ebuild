@@ -18,6 +18,7 @@ pkgCabEbList = [
   ( "X11"       , Just "dev-haskell/x11"     ) ,
   ( "directory" , Nothing                    ) ,
   ( "base"      , Nothing                    ) ,
+  ( "time"	, Nothing                    ) ,
   ( "bytestring", Nothing                    ) ,
   ( "containers", Nothing                    ) ,
   ( "array"     , Nothing                    ) ,
