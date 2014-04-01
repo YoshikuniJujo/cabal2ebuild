@@ -2,6 +2,8 @@ module Depend (
 
   ebDepends
 
+  , testEbDepend
+
 ) where
 
 import Distribution.Package
@@ -41,6 +43,8 @@ pkgCabEbList = [
   ( "HTTP"      , Just "dev-haskell/http"    )
  ]
 
+testEbDepend = ebDepend
+
 ebDepend :: Dependency -> Maybe String
 ebDepend dp
   = let ( b, a ) = ebPkgVersion dp
@@ -67,9 +71,9 @@ getPkgVersion ( UnionVersionRanges vr1 vr2 )
   = let ( b1, a1 ) = getPkgVersion vr1
         ( b2, a2 ) = getPkgVersion vr2
      in ( b2 ++ b1, "-" ++ a1 )
-getPkgVersion ( ThisVersion v ) = ( "=", showVersion v )
-getPkgVersion ( LaterVersion v ) = ( ">", showVersion v )
-getPkgVersion ( EarlierVersion v ) = ( "<", showVersion v )
+getPkgVersion ( ThisVersion v ) = ( "=", "-" ++ showVersion v )
+getPkgVersion ( LaterVersion v ) = ( ">", "-" ++ showVersion v )
+getPkgVersion ( EarlierVersion v ) = ( "<", "-" ++ showVersion v )
 getPkgVersion ( IntersectVersionRanges v1 v2 ) = getPkgVersion v1
 getPkgVersion ( WildcardVersion v@Version{versionBranch = vb} ) =
 	( "<", "-" ++ showVersion v{versionBranch = init vb ++ [last vb + 1]} )

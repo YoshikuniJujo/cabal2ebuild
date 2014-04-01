@@ -1,5 +1,5 @@
 Name:                cabal2ebuild
-Version:             0.0.15.5
+Version:             0.0.15.6
 Stability:           Experimental
 Synopsis:            make gentoo's .ebuild file from .cabal file
 Description:
