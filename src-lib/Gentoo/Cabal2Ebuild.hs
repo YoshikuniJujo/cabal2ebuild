@@ -1,3 +1,5 @@
+module Gentoo.Cabal2Ebuild (cabal2ebuild) where
+
 import Distribution.Package
 -- import Distribution.Version
 import Distribution.PackageDescription
@@ -8,7 +10,8 @@ import Data.Version
 import Distribution.License
 -- import System.Directory
 import Data.List
-import Depend
+
+import Gentoo.Depend
 
 import System.IO.Unsafe
 import System.Directory
@@ -36,12 +39,10 @@ test = do
   print $ ebDepends gpd
   
 
-main :: IO ()
-main = do
-  cabal <- fmap ( head . filter ( isSuffixOf ".cabal" ) ) $ getDirectoryContents "."
-  gpd <- readPackageDescription normal cabal
-  writeFile ( makeFileName gpd ) -- $ makeEbuild gpd
-                                 $ ebuildToFile $ gpdToEbuild gpd
+cabal2ebuild :: String -> Maybe (FilePath, String)
+cabal2ebuild cnt = case parsePackageDescription cnt of
+	ParseOk _ gpd -> Just (makeFileName gpd, ebuildToFile $ gpdToEbuild gpd)
+	_ -> Nothing
 
 makeFileName :: GenericPackageDescription -> String
 makeFileName gpd = getName gpd ++ ".ebuild"

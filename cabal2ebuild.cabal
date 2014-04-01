@@ -17,7 +17,7 @@ Maintainer:          Yoshikuni Jujo <PAF01143@nifty.ne.jp>
 Category:            Distribution
 Build-type:          Simple
 -- Extra-source-files:  
-Cabal-version:       >=1.6
+Cabal-version:       >=1.8
 
 source-repository head
   type:		git
@@ -28,9 +28,21 @@ source-repository this
   location:	https://github.com/YoshikuniJujo/cabal2ebuild.git
   tag:		0.0.15.4
 
+library
+  hs-source-dirs:  src-lib
+  build-depends:   base > 3 && < 5, directory, Cabal, filepath
+  exposed-modules: Gentoo.Cabal2Ebuild
+  other-modules:   Gentoo.Depend
+
 executable cabal2ebuild
-  hs-source-dirs: src
+  hs-source-dirs: src-exec
   main-is:        cabal2ebuild.hs
-  other-modules:  Depend
-  build-depends:  base > 3 && < 5, directory, Cabal, filepath
+  other-modules:
+  build-depends:  base > 3 && < 5, cabal2ebuild, directory
   Ghc-options:    -Wall
+
+executable hackage2ebuild
+  hs-source-dirs: src-exec
+  main-is:        hackage2ebuild.hs
+  build-depends:  base > 3 && < 5, cabal2ebuild
+  ghc-options:    -Wall
