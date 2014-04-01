@@ -48,7 +48,7 @@ testEbDepend = ebDepend
 ebDepend :: Dependency -> Maybe String
 ebDepend dp
   = let ( b, a ) = ebPkgVersion dp
-     in fmap ( \n -> b ++ n ++ a ) $ ebPkgName dp
+     in fmap ( \n -> b ++ n ++ (if null a then "" else "-") ++ a ) $ ebPkgName dp
              
 
 ebPkgName :: Dependency -> Maybe String
@@ -70,13 +70,13 @@ getPkgVersion AnyVersion = ( "", "" )
 getPkgVersion ( UnionVersionRanges vr1 vr2 )
   = let ( b1, a1 ) = getPkgVersion vr1
         ( b2, a2 ) = getPkgVersion vr2
-     in ( b2 ++ b1, "-" ++ a1 )
-getPkgVersion ( ThisVersion v ) = ( "=", "-" ++ showVersion v )
-getPkgVersion ( LaterVersion v ) = ( ">", "-" ++ showVersion v )
-getPkgVersion ( EarlierVersion v ) = ( "<", "-" ++ showVersion v )
+     in ( b2 ++ b1, a1 )
+getPkgVersion ( ThisVersion v ) = ( "=", showVersion v )
+getPkgVersion ( LaterVersion v ) = ( ">", showVersion v )
+getPkgVersion ( EarlierVersion v ) = ( "<", showVersion v )
 getPkgVersion ( IntersectVersionRanges v1 v2 ) = getPkgVersion v1
 getPkgVersion ( WildcardVersion v@Version{versionBranch = vb} ) =
-	( "<", "-" ++ showVersion v{versionBranch = init vb ++ [last vb + 1]} )
+	( "<", showVersion v{versionBranch = init vb ++ [last vb + 1]} )
 
 getDepPkgVersion :: Dependency -> VersionRange
 getDepPkgVersion ( Dependency _ vr ) = vr
