@@ -1,5 +1,5 @@
 Name:                cabal2ebuild
-Version:             0.0.15.8
+Version:             0.0.15.9
 Stability:           Experimental
 Synopsis:            make gentoo's .ebuild file from .cabal file
 Description:
@@ -7,7 +7,11 @@ Description:
 	> hoge.cabal ...
 	> % cabal2ebuild
 	> % ls
-	> % hoge.cabal hoge-0.1.2.3.ebuild ...
+	> hoge.cabal hoge-0.1.2.3.ebuild ...
+	>
+	> % hackage2ebuild cabal2ebuild 0.0.15.8 -d ebuilds
+	> % ls ebuilds
+	> cabal2ebuild-0.0.15.8.ebuild
 Homepage:            yet
 License:             BSD3
 License-file:        LICENSE
@@ -44,5 +48,5 @@ executable cabal2ebuild
 executable hackage2ebuild
   hs-source-dirs: src-exec
   main-is:        hackage2ebuild.hs
-  build-depends:  base > 3 && < 5, cabal2ebuild
+  build-depends:  base > 3 && < 5, cabal2ebuild, curl
   ghc-options:    -Wall
