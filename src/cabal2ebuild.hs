@@ -1,12 +1,12 @@
 import Distribution.Package
-import Distribution.Version
+-- import Distribution.Version
 import Distribution.PackageDescription
 import Distribution.PackageDescription.Parse
 import Distribution.Verbosity
 import Data.Maybe
 import Data.Version
 import Distribution.License
-import System.Directory
+-- import System.Directory
 import Data.List
 import Depend
 
@@ -36,7 +36,7 @@ test = do
   print $ ebDepends gpd
   
 
--- main :: IO ()
+main :: IO ()
 main = do
   cabal <- fmap ( head . filter ( isSuffixOf ".cabal" ) ) $ getDirectoryContents "."
   gpd <- readPackageDescription normal cabal
@@ -48,11 +48,12 @@ makeFileName gpd = getName gpd ++ ".ebuild"
 
 -- data EbLicense = BSD3 | GPL | LGPL deriving Show
 
-data EbKWords = X86 | BX86 deriving Show
+data EbKWords = X86 | BX86 | AMD64 deriving Show
 
 showEKW :: EbKWords -> String
 showEKW X86  = "x86"
 showEKW BX86 = "~x86"
+showEKW AMD64 = "amd64"
 
 data Ebuild = Ebuild {
  
@@ -80,7 +81,7 @@ gpdToEbuild gpd = Ebuild {
   srcURI    = makeSrcURI ( getName gpd ) ,
   ebLicense = getLicense gpd ,
   ebSlot    = 0 ,
-  ebKWords  = [ X86 ] ,
+  ebKWords  = [ X86, AMD64 ] ,
   ebDepend  = ">=dev-lang/ghc-6.10" : "dev-haskell/cabal" : ebDepends gpd
 
  }

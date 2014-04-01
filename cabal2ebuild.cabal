@@ -1,5 +1,5 @@
 Name:                cabal2ebuild
-Version:             0.0.15.7
+Version:             0.0.15.8
 Stability:           Experimental
 Synopsis:            make gentoo's .ebuild file from .cabal file
 Description:
@@ -29,7 +29,8 @@ source-repository this
   tag:		0.0.15.4
 
 executable cabal2ebuild
-  main-is:       cabal2ebuild.hs
-  other-modules: Depend
-  build-depends: base > 3 && < 5, directory, Cabal, filepath
-  Ghc-options:		-Wall
+  hs-source-dirs: src
+  main-is:        cabal2ebuild.hs
+  other-modules:  Depend
+  build-depends:  base > 3 && < 5, directory, Cabal, filepath
+  Ghc-options:    -Wall
